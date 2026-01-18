@@ -6,7 +6,8 @@
       "Bash(npx shadcn@latest init:*)",
       "Bash(npm install:*)",
       "Bash(npx shadcn@latest add button dropdown-menu -y)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx shadcn@latest add:*)"
     ]
   }
 }
