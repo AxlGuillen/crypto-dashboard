@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { ArrowUpDown, TrendingUp, TrendingDown } from "lucide-react"
 import {
   Table,
@@ -13,7 +14,9 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { cn, formatCurrency, formatNumber, formatPercentage } from "@/lib/utils"
+import { FavoriteButton } from "@/components/crypto/favorite-button"
+import { useFavorites } from "@/hooks"
+import { cn, formatCurrency, formatPercentage } from "@/lib/utils"
 import type { Cryptocurrency } from "@/types/crypto"
 
 interface CryptoTableProps {
@@ -23,6 +26,8 @@ interface CryptoTableProps {
 }
 
 export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
+  const { isFavorite, toggleFavorite } = useFavorites()
+
   if (loading) {
     return <CryptoTableSkeleton />
   }
@@ -32,6 +37,7 @@ export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead className="w-10"></TableHead>
             <TableHead className="w-12 text-center">#</TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead className="text-right">
@@ -82,7 +88,12 @@ export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
         </TableHeader>
         <TableBody>
           {cryptos.map((crypto) => (
-            <CryptoRow key={crypto.id} crypto={crypto} />
+            <CryptoRow
+              key={crypto.id}
+              crypto={crypto}
+              isFavorite={isFavorite(crypto.id)}
+              onToggleFavorite={() => toggleFavorite(crypto.id)}
+            />
           ))}
         </TableBody>
       </Table>
@@ -92,14 +103,31 @@ export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
 
 interface CryptoRowProps {
   crypto: Cryptocurrency
+  isFavorite: boolean
+  onToggleFavorite: () => void
 }
 
-function CryptoRow({ crypto }: CryptoRowProps) {
+function CryptoRow({ crypto, isFavorite, onToggleFavorite }: CryptoRowProps) {
+  const router = useRouter()
   const priceChange = crypto.price_change_percentage_24h
   const isPositive = priceChange >= 0
 
+  const handleRowClick = () => {
+    router.push(`/crypto/${crypto.id}`)
+  }
+
   return (
-    <TableRow className="cursor-pointer hover:bg-muted/50">
+    <TableRow
+      className="cursor-pointer hover:bg-muted/50 transition-colors"
+      onClick={handleRowClick}
+    >
+      <TableCell className="w-10">
+        <FavoriteButton
+          isFavorite={isFavorite}
+          onToggle={onToggleFavorite}
+          size="sm"
+        />
+      </TableCell>
       <TableCell className="text-center font-medium text-muted-foreground">
         {crypto.market_cap_rank}
       </TableCell>
@@ -159,6 +187,7 @@ function CryptoTableSkeleton() {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead className="w-10"></TableHead>
             <TableHead className="w-12 text-center">#</TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead className="text-right">Precio</TableHead>
@@ -170,6 +199,9 @@ function CryptoTableSkeleton() {
         <TableBody>
           {Array.from({ length: 10 }).map((_, i) => (
             <TableRow key={i}>
+              <TableCell>
+                <Skeleton className="h-8 w-8 rounded" />
+              </TableCell>
               <TableCell className="text-center">
                 <Skeleton className="mx-auto h-4 w-6" />
               </TableCell>

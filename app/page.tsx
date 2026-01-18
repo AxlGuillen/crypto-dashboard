@@ -22,14 +22,14 @@ export default function Home() {
     error: cryptosError,
     refetch: refetchCryptos,
     lastUpdated,
-  } = useCryptos({ perPage: 50, refreshInterval: 60000 })
+  } = useCryptos({ perPage: 50, refreshInterval: 0 })
 
   const {
     data: globalData,
     loading: globalLoading,
     error: globalError,
     refetch: refetchGlobal,
-  } = useGlobalData({ refreshInterval: 60000 })
+  } = useGlobalData({ refreshInterval: 0 })
 
   const loading = cryptosLoading || globalLoading
   const error = cryptosError || globalError
@@ -135,7 +135,7 @@ export default function Home() {
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-2xl font-bold">Top 50 Criptomonedas</h2>
             <span className="text-sm text-muted-foreground">
-              Auto-refresh cada 60s
+              Click en actualizar para refrescar
             </span>
           </div>
           <CryptoTable cryptos={cryptos} loading={cryptosLoading} />
