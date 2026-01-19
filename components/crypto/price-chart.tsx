@@ -157,16 +157,20 @@ export function PriceChart({ cryptoId, cryptoName }: PriceChartProps) {
 interface SparklineProps {
   data: number[]
   className?: string
+  width?: number
+  height?: number
 }
 
-export function Sparkline({ data, className }: SparklineProps) {
+export function Sparkline({ data, className, width, height }: SparklineProps) {
   if (!data || data.length === 0) return null
 
   const chartData = data.map((price, index) => ({ price, index }))
   const isPositive = data[data.length - 1] >= data[0]
 
+  const style = width && height ? { width, height } : undefined
+
   return (
-    <div className={cn("h-12 w-24", className)}>
+    <div className={cn("h-12 w-24", className)} style={style}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData}>
           <defs>
