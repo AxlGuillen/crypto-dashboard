@@ -1,5 +1,3 @@
-// Tipos para la API de CoinGecko
-
 export interface Cryptocurrency {
   id: string
   symbol: string
@@ -82,7 +80,6 @@ export interface GlobalMarketData {
   }
 }
 
-// Tipos para el estado de la UI
 export interface CryptoFilter {
   search: string
   sortBy: keyof Cryptocurrency
@@ -91,7 +88,6 @@ export interface CryptoFilter {
   page: number
 }
 
-// Tipo para datos de gráficos formateados
 export interface ChartDataPoint {
   date: string
   timestamp: number
@@ -100,7 +96,6 @@ export interface ChartDataPoint {
   marketCap?: number
 }
 
-// Tipos para Trending
 export interface TrendingCoin {
   item: {
     id: string

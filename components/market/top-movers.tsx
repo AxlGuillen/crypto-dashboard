@@ -22,7 +22,6 @@ export function TopMovers({ cryptos, loading }: TopMoversProps) {
     return <TopMoversSkeleton />
   }
 
-  // Sort by price change to get gainers and losers
   const sorted = [...cryptos].sort(
     (a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h
   )

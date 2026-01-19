@@ -9,8 +9,8 @@
  */
 
 const CACHE_PREFIX = "crypto_cache_"
-const DEFAULT_TTL = 10 * 60 * 1000 // 10 minutos en milisegundos
-const DEBUG = false // Cambiar a true para ver logs de debug
+const DEFAULT_TTL = 10 * 60 * 1000
+const DEBUG = false
 
 interface CacheEntry<T> {
   key: string
@@ -100,7 +100,6 @@ export function setCachedData<T>(key: string, data: T, ttl: number = DEFAULT_TTL
     debugLog(`SET - ${key} (TTL: ${ttl / 1000}s)`)
   } catch (error) {
     debugLog(`ERROR guardando cache: ${key}`, error)
-    // Si localStorage está lleno, limpiar cache antiguo
     if (error instanceof Error && error.name === "QuotaExceededError") {
       clearExpiredCache()
     }
@@ -246,7 +245,7 @@ export function getCacheStats(): {
         totalEntries++
         const cached = localStorage.getItem(key)
         if (cached) {
-          totalBytes += cached.length * 2 // UTF-16
+          totalBytes += cached.length * 2
           const entry: CacheEntry<unknown> = JSON.parse(cached)
           if (now < entry.expiresAt) {
             validEntries++

@@ -36,10 +36,8 @@ export function PriceChart({ cryptoId, cryptoName }: PriceChartProps) {
     days: selectedRange,
   })
 
-  // Colores según el tema
   const tickColor = resolvedTheme === "dark" ? "#a1a1aa" : "#71717a"
 
-  // Calcular si el precio subió o bajó
   const priceChange =
     chartData.length > 1
       ? chartData[chartData.length - 1].price - chartData[0].price
@@ -153,7 +151,6 @@ export function PriceChart({ cryptoId, cryptoName }: PriceChartProps) {
   )
 }
 
-// Mini sparkline para usar en cards
 interface SparklineProps {
   data: number[]
   className?: string

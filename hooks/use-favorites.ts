@@ -17,7 +17,6 @@ export function useFavorites(): UseFavoritesReturn {
   const [favorites, setFavorites] = useState<string[]>([])
   const [isHydrated, setIsHydrated] = useState(false)
 
-  // Cargar favoritos desde localStorage al montar
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY)
@@ -33,7 +32,6 @@ export function useFavorites(): UseFavoritesReturn {
     setIsHydrated(true)
   }, [])
 
-  // Guardar en localStorage cuando cambian los favoritos
   useEffect(() => {
     if (isHydrated) {
       try {

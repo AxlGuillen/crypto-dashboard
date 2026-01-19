@@ -33,39 +33,32 @@ const COLORS = [
 export function ComparisonChart({ cryptos }: ComparisonChartProps) {
   const { resolvedTheme } = useTheme()
 
-  // Colores según el tema
   const tickColor = resolvedTheme === "dark" ? "#a1a1aa" : "#71717a"
   const legendColor = resolvedTheme === "dark" ? "#a1a1aa" : "#71717a"
 
-  // Normalizar los datos de sparkline para comparación (base 100)
   const chartData = useMemo(() => {
     if (cryptos.length === 0) return []
 
-    // Encontrar el sparkline con más puntos
     const maxPoints = Math.max(
       ...cryptos.map((c) => c.sparkline_in_7d?.price?.length || 0)
     )
 
     if (maxPoints === 0) return []
 
-    // Crear array de datos normalizados
     const data: Record<string, number | string>[] = []
 
     for (let i = 0; i < maxPoints; i++) {
       const point: Record<string, number | string> = {
         index: i,
-        // Convertir índice a día aproximado
         day: `Día ${Math.floor((i / maxPoints) * 7) + 1}`,
       }
 
       cryptos.forEach((crypto) => {
         const prices = crypto.sparkline_in_7d?.price
         if (prices && prices.length > 0) {
-          // Interpolar si es necesario
           const priceIndex = Math.floor((i / maxPoints) * prices.length)
           const basePrice = prices[0]
           const currentPrice = prices[Math.min(priceIndex, prices.length - 1)]
-          // Normalizar a base 100
           point[crypto.symbol.toUpperCase()] = ((currentPrice / basePrice) * 100)
         }
       })
@@ -73,7 +66,6 @@ export function ComparisonChart({ cryptos }: ComparisonChartProps) {
       data.push(point)
     }
 
-    // Reducir puntos para mejor rendimiento (mostrar ~50 puntos)
     const step = Math.max(1, Math.floor(data.length / 50))
     return data.filter((_, i) => i % step === 0)
   }, [cryptos])

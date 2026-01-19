@@ -22,12 +22,10 @@ export default function WatchlistPage() {
   const { favorites, removeFavorite } = useFavorites()
   const { cryptos, loading } = useCryptos({ perPage: 100, refreshInterval: 0 })
 
-  // Filtrar solo las criptos favoritas
   const favoriteCryptos = useMemo(() => {
     return cryptos.filter((crypto) => favorites.includes(crypto.id))
   }, [cryptos, favorites])
 
-  // Calcular estadísticas
   const stats = useMemo(() => {
     if (favoriteCryptos.length === 0) {
       return { totalValue: 0, totalChange: 0, avgChange: 0 }

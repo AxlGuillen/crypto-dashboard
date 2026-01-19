@@ -7,7 +7,7 @@ import type { Cryptocurrency } from "@/types/crypto"
 interface UseCryptosOptions {
   page?: number
   perPage?: number
-  refreshInterval?: number // en milisegundos
+  refreshInterval?: number // miliseconds
 }
 
 interface UseCryptosReturn {
@@ -45,7 +45,6 @@ export function useCryptos(options: UseCryptosOptions = {}): UseCryptosReturn {
   useEffect(() => {
     fetchCryptos(false)
 
-    // Auto-refresh (sin forceRefresh para usar cache)
     if (refreshInterval > 0) {
       const interval = setInterval(() => fetchCryptos(false), refreshInterval)
       return () => clearInterval(interval)
