@@ -43,7 +43,10 @@ export function formatNumber(value: number, compact = false): string {
   return new Intl.NumberFormat("en-US").format(value)
 }
 
-export function formatPercentage(value: number): string {
+export function formatPercentage(value: number | null | undefined): string {
+  if (value === null || value === undefined) {
+    return "0.00%"
+  }
   const sign = value >= 0 ? "+" : ""
   return `${sign}${value.toFixed(2)}%`
 }
