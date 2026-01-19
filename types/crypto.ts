@@ -99,3 +99,33 @@ export interface ChartDataPoint {
   volume?: number
   marketCap?: number
 }
+
+// Tipos para Trending
+export interface TrendingCoin {
+  item: {
+    id: string
+    coin_id: number
+    name: string
+    symbol: string
+    market_cap_rank: number
+    thumb: string
+    small: string
+    large: string
+    slug: string
+    price_btc: number
+    score: number
+    data: {
+      price: number
+      price_change_percentage_24h: {
+        usd: number
+      }
+      market_cap: string
+      total_volume: string
+      sparkline: string
+    }
+  }
+}
+
+export interface TrendingResponse {
+  coins: TrendingCoin[]
+}
