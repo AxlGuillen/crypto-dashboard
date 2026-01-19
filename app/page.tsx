@@ -35,7 +35,7 @@ export default function Home() {
   const error = cryptosError || globalError
 
   const handleRefresh = async () => {
-    await Promise.all([refetchCryptos(), refetchGlobal()])
+    await Promise.all([refetchCryptos(true), refetchGlobal(true)])
   }
 
   return (
