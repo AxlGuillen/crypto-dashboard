@@ -14,7 +14,7 @@ interface UseCryptosReturn {
   cryptos: Cryptocurrency[]
   loading: boolean
   error: string | null
-  refetch: () => Promise<void>
+  refetch: (forceRefresh?: boolean) => Promise<void>
   lastUpdated: Date | null
 }
 
@@ -26,10 +26,13 @@ export function useCryptos(options: UseCryptosOptions = {}): UseCryptosReturn {
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
-  const fetchCryptos = useCallback(async () => {
+  const fetchCryptos = useCallback(async (forceRefresh = false) => {
     try {
       setError(null)
-      const data = await getCryptoList(page, perPage)
+      if (forceRefresh) {
+        setLoading(true)
+      }
+      const data = await getCryptoList(page, perPage, "usd", forceRefresh)
       setCryptos(data)
       setLastUpdated(new Date())
     } catch (err) {
@@ -40,11 +43,11 @@ export function useCryptos(options: UseCryptosOptions = {}): UseCryptosReturn {
   }, [page, perPage])
 
   useEffect(() => {
-    fetchCryptos()
+    fetchCryptos(false)
 
-    // Auto-refresh
+    // Auto-refresh (sin forceRefresh para usar cache)
     if (refreshInterval > 0) {
-      const interval = setInterval(fetchCryptos, refreshInterval)
+      const interval = setInterval(() => fetchCryptos(false), refreshInterval)
       return () => clearInterval(interval)
     }
   }, [fetchCryptos, refreshInterval])

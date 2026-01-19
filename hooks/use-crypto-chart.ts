@@ -14,7 +14,7 @@ interface UseCryptoChartReturn {
   rawData: CryptoMarketChart | null
   loading: boolean
   error: string | null
-  refetch: () => Promise<void>
+  refetch: (forceRefresh?: boolean) => Promise<void>
 }
 
 function formatChartData(data: CryptoMarketChart): ChartDataPoint[] {
@@ -41,13 +41,13 @@ export function useCryptoChart(
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchChart = useCallback(async () => {
+  const fetchChart = useCallback(async (forceRefresh = false) => {
     if (!id) return
 
     try {
       setLoading(true)
       setError(null)
-      const data = await getCryptoMarketChart(id, days, currency)
+      const data = await getCryptoMarketChart(id, days, currency, forceRefresh)
       setRawData(data)
       setChartData(formatChartData(data))
     } catch (err) {
@@ -59,7 +59,7 @@ export function useCryptoChart(
 
   useEffect(() => {
     if (id) {
-      fetchChart()
+      fetchChart(false)
     } else {
       setChartData([])
       setRawData(null)

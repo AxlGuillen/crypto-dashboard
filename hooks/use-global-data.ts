@@ -12,7 +12,7 @@ interface UseGlobalDataReturn {
   data: GlobalMarketData["data"] | null
   loading: boolean
   error: string | null
-  refetch: () => Promise<void>
+  refetch: (forceRefresh?: boolean) => Promise<void>
 }
 
 export function useGlobalData(
@@ -24,10 +24,13 @@ export function useGlobalData(
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (forceRefresh = false) => {
     try {
       setError(null)
-      const response = await getGlobalData()
+      if (forceRefresh) {
+        setLoading(true)
+      }
+      const response = await getGlobalData(forceRefresh)
       setData(response.data)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error fetching global data")
@@ -37,10 +40,10 @@ export function useGlobalData(
   }, [])
 
   useEffect(() => {
-    fetchData()
+    fetchData(false)
 
     if (refreshInterval > 0) {
-      const interval = setInterval(fetchData, refreshInterval)
+      const interval = setInterval(() => fetchData(false), refreshInterval)
       return () => clearInterval(interval)
     }
   }, [fetchData, refreshInterval])
