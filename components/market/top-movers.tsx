@@ -17,6 +17,20 @@ interface TopMoversProps {
   loading: boolean
 }
 
+/**
+ * Displays top gainers and losers in two side-by-side columns
+ *
+ * Features:
+ * - Shows top 6 gainers and top 6 losers
+ * - Each item shows logo, name, price, sparkline, and 24h change
+ * - Clickable rows for navigation to detail page
+ * - Favorite toggle for each item
+ *
+ * @param props - Component props
+ * @param props.cryptos - Array of cryptocurrencies to analyze
+ * @param props.loading - If true, shows skeleton placeholder
+ * @returns Top movers component or skeleton if loading
+ */
 export function TopMovers({ cryptos, loading }: TopMoversProps) {
   if (loading) {
     return <TopMoversSkeleton />
@@ -37,7 +51,7 @@ export function TopMovers({ cryptos, loading }: TopMoversProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <TrendingUp className="h-5 w-5 text-green-500" />
-              Top Ganadores 24h
+              Top Gainers 24h
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -52,7 +66,7 @@ export function TopMovers({ cryptos, loading }: TopMoversProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <TrendingDown className="h-5 w-5 text-red-500" />
-              Top Perdedores 24h
+              Top Losers 24h
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -70,6 +84,13 @@ interface MoverCardProps {
   crypto: Cryptocurrency
 }
 
+/**
+ * Individual card for a top mover (gainer or loser)
+ *
+ * @param props - Component props
+ * @param props.crypto - Cryptocurrency data to display
+ * @returns Mover card component
+ */
 function MoverCard({ crypto }: MoverCardProps) {
   const router = useRouter()
   const { isFavorite, toggleFavorite } = useFavorites()
@@ -160,6 +181,11 @@ function MoverCard({ crypto }: MoverCardProps) {
   )
 }
 
+/**
+ * Skeleton placeholder for TopMovers while loading
+ *
+ * @returns Skeleton component
+ */
 function TopMoversSkeleton() {
   return (
     <div className="mb-8">

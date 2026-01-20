@@ -24,6 +24,21 @@ interface TrendingCoinsProps {
   loading: boolean
 }
 
+/**
+ * Table displaying trending cryptocurrencies
+ *
+ * Features:
+ * - Shows top 10 trending coins
+ * - Displays rank, logo, name, price, 24h change, and market cap
+ * - Fire icon indicating trending status
+ * - Clickable rows for navigation to detail page
+ * - Favorite toggle for each item
+ *
+ * @param props - Component props
+ * @param props.trending - Array of trending coins from API
+ * @param props.loading - If true, shows skeleton placeholder
+ * @returns Trending coins table or skeleton if loading
+ */
 export function TrendingCoins({ trending, loading }: TrendingCoinsProps) {
   const router = useRouter()
   const { isFavorite, toggleFavorite } = useFavorites()
@@ -45,7 +60,7 @@ export function TrendingCoins({ trending, loading }: TrendingCoinsProps) {
           </div>
           Trending Coins
           <Badge variant="secondary" className="ml-2 bg-orange-500/10 text-orange-500">
-            Más buscadas
+            Most Searched
           </Badge>
         </CardTitle>
       </CardHeader>
@@ -55,9 +70,9 @@ export function TrendingCoins({ trending, loading }: TrendingCoinsProps) {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12">#</TableHead>
-                <TableHead>Moneda</TableHead>
+                <TableHead>Coin</TableHead>
                 <TableHead className="hidden text-right sm:table-cell">
-                  Precio
+                  Price
                 </TableHead>
                 <TableHead className="text-right">24h %</TableHead>
                 <TableHead className="hidden text-right md:table-cell">
@@ -168,6 +183,11 @@ export function TrendingCoins({ trending, loading }: TrendingCoinsProps) {
   )
 }
 
+/**
+ * Skeleton placeholder for TrendingCoins while loading
+ *
+ * @returns Skeleton table component
+ */
 function TrendingCoinsSkeleton() {
   return (
     <Card className="mb-8">

@@ -17,6 +17,22 @@ interface CryptoCardProps {
   showRemove?: boolean
 }
 
+/**
+ * Card component displaying cryptocurrency information
+ *
+ * Features:
+ * - Shows crypto logo, name, symbol, and price
+ * - Displays 24h price change with color indicator
+ * - Shows 7-day sparkline chart
+ * - Optional remove button for watchlist
+ * - Clickable for navigation to detail page
+ *
+ * @param props - Component props
+ * @param props.crypto - Cryptocurrency data to display
+ * @param props.onRemove - Optional callback when remove button is clicked
+ * @param props.showRemove - If true, shows remove button (default: true)
+ * @returns Crypto card component
+ */
 export function CryptoCard({ crypto, onRemove, showRemove = true }: CryptoCardProps) {
   const router = useRouter()
   const priceChange = crypto.price_change_percentage_24h
@@ -99,7 +115,7 @@ export function CryptoCard({ crypto, onRemove, showRemove = true }: CryptoCardPr
             <p className="font-medium">{formatCurrency(crypto.market_cap, true)}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Volumen 24h</p>
+            <p className="text-muted-foreground">Volume 24h</p>
             <p className="font-medium">{formatCurrency(crypto.total_volume, true)}</p>
           </div>
         </div>
@@ -108,6 +124,11 @@ export function CryptoCard({ crypto, onRemove, showRemove = true }: CryptoCardPr
   )
 }
 
+/**
+ * Skeleton placeholder for CryptoCard while loading
+ *
+ * @returns Skeleton card component
+ */
 export function CryptoCardSkeleton() {
   return (
     <Card>

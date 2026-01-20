@@ -25,6 +25,21 @@ interface CryptoTableProps {
   onSort?: (key: keyof Cryptocurrency) => void
 }
 
+/**
+ * Displays a table of cryptocurrencies with sortable columns
+ *
+ * Features:
+ * - Sortable columns (price, 24h change, market cap, volume)
+ * - Favorite toggle for each row
+ * - Clickable rows for navigation to detail page
+ * - Responsive design with hidden columns on smaller screens
+ *
+ * @param props - Component props
+ * @param props.cryptos - Array of cryptocurrency data to display
+ * @param props.loading - If true, shows skeleton placeholder
+ * @param props.onSort - Optional callback for column sorting
+ * @returns Crypto table component or skeleton if loading
+ */
 export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
   const { isFavorite, toggleFavorite } = useFavorites()
 
@@ -39,7 +54,7 @@ export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
           <TableRow>
             <TableHead className="w-10"></TableHead>
             <TableHead className="w-12 text-center">#</TableHead>
-            <TableHead>Nombre</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead className="text-right">
               <Button
                 variant="ghost"
@@ -47,7 +62,7 @@ export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
                 className="h-8 px-2"
                 onClick={() => onSort?.("current_price")}
               >
-                Precio
+                Price
                 <ArrowUpDown className="ml-1 h-3 w-3" />
               </Button>
             </TableHead>
@@ -69,7 +84,7 @@ export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
                 className="h-8 px-2"
                 onClick={() => onSort?.("market_cap")}
               >
-                Cap. Mercado
+                Market Cap
                 <ArrowUpDown className="ml-1 h-3 w-3" />
               </Button>
             </TableHead>
@@ -80,7 +95,7 @@ export function CryptoTable({ cryptos, loading, onSort }: CryptoTableProps) {
                 className="h-8 px-2"
                 onClick={() => onSort?.("total_volume")}
               >
-                Volumen 24h
+                Volume 24h
                 <ArrowUpDown className="ml-1 h-3 w-3" />
               </Button>
             </TableHead>
@@ -107,6 +122,15 @@ interface CryptoRowProps {
   onToggleFavorite: () => void
 }
 
+/**
+ * Single row component for the crypto table
+ *
+ * @param props - Component props
+ * @param props.crypto - Cryptocurrency data for this row
+ * @param props.isFavorite - Whether the crypto is in favorites
+ * @param props.onToggleFavorite - Callback to toggle favorite status
+ * @returns Table row component
+ */
 function CryptoRow({ crypto, isFavorite, onToggleFavorite }: CryptoRowProps) {
   const router = useRouter()
   const priceChange = crypto.price_change_percentage_24h
@@ -181,6 +205,11 @@ function CryptoRow({ crypto, isFavorite, onToggleFavorite }: CryptoRowProps) {
   )
 }
 
+/**
+ * Skeleton placeholder for CryptoTable while loading
+ *
+ * @returns Skeleton table component
+ */
 function CryptoTableSkeleton() {
   return (
     <div className="rounded-lg border">
@@ -189,7 +218,7 @@ function CryptoTableSkeleton() {
           <TableRow>
             <TableHead className="w-10"></TableHead>
             <TableHead className="w-12 text-center">#</TableHead>
-            <TableHead>Nombre</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead className="text-right">Precio</TableHead>
             <TableHead className="hidden text-right sm:table-cell">24h %</TableHead>
             <TableHead className="hidden text-right md:table-cell">Cap. Mercado</TableHead>

@@ -11,6 +11,17 @@ interface StatCardProps {
   loading?: boolean
 }
 
+/**
+ * Displays a statistics card with title, value, optional change percentage, and icon
+ *
+ * @param props - Component props
+ * @param props.title - Card title displayed in header
+ * @param props.value - Main value to display
+ * @param props.change - Optional percentage change (positive/negative coloring applied)
+ * @param props.icon - Lucide icon component to display
+ * @param props.loading - If true, shows skeleton placeholder
+ * @returns Stat card component or skeleton if loading
+ */
 export function StatCard({ title, value, change, icon: Icon, loading }: StatCardProps) {
   if (loading) {
     return <StatCardSkeleton />
@@ -36,7 +47,7 @@ export function StatCard({ title, value, change, icon: Icon, loading }: StatCard
             )}
           >
             {isPositive ? "+" : ""}
-            {change.toFixed(2)}% en 24h
+            {change.toFixed(2)}% in 24h
           </p>
         )}
       </CardContent>
@@ -44,6 +55,11 @@ export function StatCard({ title, value, change, icon: Icon, loading }: StatCard
   )
 }
 
+/**
+ * Skeleton placeholder for StatCard while loading
+ *
+ * @returns Skeleton stat card component
+ */
 export function StatCardSkeleton() {
   return (
     <Card>

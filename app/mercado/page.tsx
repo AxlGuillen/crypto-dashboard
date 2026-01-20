@@ -57,9 +57,9 @@ export default function MercadoPage() {
               <Store className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold">Mercado Crypto</h1>
+              <h1 className="text-2xl font-bold">Crypto Market</h1>
               <p className="text-sm text-muted-foreground">
-                Vista analítica completa del mercado de criptomonedas
+                Complete analytical view of the cryptocurrency market
               </p>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function MercadoPage() {
             <RefreshCw
               className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`}
             />
-            Actualizar
+            Refresh
           </Button>
         </div>
 
@@ -87,26 +87,26 @@ export default function MercadoPage() {
               onClick={handleRefresh}
               className="ml-auto"
             >
-              Reintentar
+              Retry
             </Button>
           </div>
         )}
 
         {/* Market Hero Section */}
         <section>
-          <h2 className="mb-4 text-xl font-semibold">Métricas Globales</h2>
+          <h2 className="mb-4 text-xl font-semibold">Global Metrics</h2>
           <MarketHero globalData={globalData} loading={globalLoading} />
         </section>
 
         {/* Top Gainers & Losers */}
         <section>
-          <h2 className="mb-4 text-xl font-semibold">Movimientos del Día</h2>
+          <h2 className="mb-4 text-xl font-semibold">Daily Movers</h2>
           <TopMovers cryptos={cryptos} loading={cryptosLoading} />
         </section>
 
         {/* Trending Coins */}
         <section>
-          <h2 className="mb-4 text-xl font-semibold">🔥 En Tendencia</h2>
+          <h2 className="mb-4 text-xl font-semibold">Trending</h2>
           <TrendingCoins trending={trending} loading={trendingLoading} />
         </section>
       </main>

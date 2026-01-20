@@ -11,11 +11,27 @@ interface UseCryptoDetailsReturn {
   refetch: (forceRefresh?: boolean) => Promise<void>
 }
 
+/**
+ * Custom hook for fetching detailed information about a specific cryptocurrency
+ *
+ * Provides comprehensive data including:
+ * - Current price and market data
+ * - Price change percentages (24h, 7d, 30d)
+ * - Supply information
+ * - Description and links
+ *
+ * @param id - The cryptocurrency ID (e.g., "bitcoin", "ethereum"), or null to skip fetch
+ * @returns Object with crypto details, loading state, error, and refetch function
+ */
 export function useCryptoDetails(id: string | null): UseCryptoDetailsReturn {
   const [details, setDetails] = useState<CryptoDetails | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  /**
+   * Fetches cryptocurrency details from API
+   * @param forceRefresh - If true, bypasses cache
+   */
   const fetchDetails = useCallback(async (forceRefresh = false) => {
     if (!id) return
 
@@ -31,6 +47,7 @@ export function useCryptoDetails(id: string | null): UseCryptoDetailsReturn {
     }
   }, [id])
 
+  // Fetch when ID changes
   useEffect(() => {
     if (id) {
       fetchDetails(false)

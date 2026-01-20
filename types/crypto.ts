@@ -1,3 +1,8 @@
+/**
+ * Cryptocurrency data from CoinGecko markets endpoint
+ *
+ * Contains market data including price, volume, market cap, and historical changes
+ */
 export interface Cryptocurrency {
   id: string
   symbol: string
@@ -29,12 +34,22 @@ export interface Cryptocurrency {
   }
 }
 
+/**
+ * Historical market chart data
+ *
+ * Contains arrays of [timestamp, value] pairs for prices, market caps, and volumes
+ */
 export interface CryptoMarketChart {
   prices: [number, number][]
   market_caps: [number, number][]
   total_volumes: [number, number][]
 }
 
+/**
+ * Detailed cryptocurrency information
+ *
+ * Contains comprehensive data including description, images, market data, and external links
+ */
 export interface CryptoDetails {
   id: string
   symbol: string
@@ -69,6 +84,11 @@ export interface CryptoDetails {
   }
 }
 
+/**
+ * Global cryptocurrency market data
+ *
+ * Contains aggregate market statistics including total market cap, volume, and dominance percentages
+ */
 export interface GlobalMarketData {
   data: {
     active_cryptocurrencies: number
@@ -80,6 +100,9 @@ export interface GlobalMarketData {
   }
 }
 
+/**
+ * Filter and pagination options for cryptocurrency list
+ */
 export interface CryptoFilter {
   search: string
   sortBy: keyof Cryptocurrency
@@ -88,6 +111,9 @@ export interface CryptoFilter {
   page: number
 }
 
+/**
+ * Formatted data point for chart visualization
+ */
 export interface ChartDataPoint {
   date: string
   timestamp: number
@@ -96,6 +122,9 @@ export interface ChartDataPoint {
   marketCap?: number
 }
 
+/**
+ * Trending coin data from CoinGecko trending endpoint
+ */
 export interface TrendingCoin {
   item: {
     id: string
@@ -121,6 +150,9 @@ export interface TrendingCoin {
   }
 }
 
+/**
+ * Response wrapper for trending coins endpoint
+ */
 export interface TrendingResponse {
   coins: TrendingCoin[]
 }

@@ -11,11 +11,23 @@ interface UseTrendingReturn {
   refetch: (forceRefresh?: boolean) => Promise<void>
 }
 
+/**
+ * Custom hook for fetching trending cryptocurrencies
+ *
+ * Returns the top trending coins based on search popularity
+ * and trading activity on CoinGecko.
+ *
+ * @returns Object with trending coins array, loading state, error, and refetch function
+ */
 export function useTrending(): UseTrendingReturn {
   const [trending, setTrending] = useState<TrendingCoin[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  /**
+   * Fetches trending coins from API
+   * @param forceRefresh - If true, bypasses cache
+   */
   const fetchTrending = useCallback(async (forceRefresh = false) => {
     try {
       setError(null)
@@ -31,6 +43,7 @@ export function useTrending(): UseTrendingReturn {
     }
   }, [])
 
+  // Fetch on mount
   useEffect(() => {
     fetchTrending(false)
   }, [fetchTrending])

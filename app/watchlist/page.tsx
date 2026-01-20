@@ -55,10 +55,10 @@ export default function WatchlistPage() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <Star className="h-8 w-8 fill-yellow-400 text-yellow-400" />
-            <h1 className="text-3xl font-bold">Mis Favoritos</h1>
+            <h1 className="text-3xl font-bold">My Favorites</h1>
           </div>
           <p className="text-muted-foreground">
-            Tu watchlist personalizada de criptomonedas
+            Your personalized cryptocurrency watchlist
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export default function WatchlistPage() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">
-                    Criptos en Watchlist
+                    Cryptos in Watchlist
                   </CardTitle>
                   <Star className="h-4 w-4 text-yellow-400" />
                 </CardHeader>
@@ -97,7 +97,7 @@ export default function WatchlistPage() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">
-                    Cambio Promedio 24h
+                    Average Change 24h
                   </CardTitle>
                   <BarChart3 className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
@@ -128,7 +128,7 @@ export default function WatchlistPage() {
 
             {/* Crypto Cards Grid */}
             <div>
-              <h2 className="text-xl font-bold mb-4">Tus Criptomonedas</h2>
+              <h2 className="text-xl font-bold mb-4">Your Cryptocurrencies</h2>
               {loading ? (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {Array.from({ length: favorites.length || 4 }).map((_, i) => (
@@ -159,15 +159,15 @@ function EmptyState() {
     <Card className="border-dashed">
       <CardContent className="flex flex-col items-center justify-center py-16">
         <Star className="h-16 w-16 text-muted-foreground/50 mb-4" />
-        <h2 className="text-xl font-semibold mb-2">Sin favoritos aún</h2>
+        <h2 className="text-xl font-semibold mb-2">No favorites yet</h2>
         <p className="text-muted-foreground text-center max-w-md mb-6">
-          Agrega criptomonedas a tu watchlist haciendo clic en el icono de
-          estrella en la tabla principal o en la página de detalle.
+          Add cryptocurrencies to your watchlist by clicking the star icon
+          in the main table or on the detail page.
         </p>
         <Link href="/">
           <Button>
             <Plus className="mr-2 h-4 w-4" />
-            Explorar Criptomonedas
+            Explore Cryptocurrencies
           </Button>
         </Link>
       </CardContent>

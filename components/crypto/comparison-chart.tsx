@@ -18,7 +18,7 @@ interface ComparisonChartProps {
   cryptos: Cryptocurrency[]
 }
 
-// Colores para las diferentes líneas
+// Colors for the different chart lines
 const COLORS = [
   "#3b82f6", // blue
   "#22c55e", // green
@@ -30,6 +30,19 @@ const COLORS = [
   "#f97316", // orange
 ]
 
+/**
+ * Line chart comparing performance of multiple cryptocurrencies
+ *
+ * Features:
+ * - Normalized performance comparison (base 100)
+ * - 7-day historical data from sparklines
+ * - Color-coded lines for each cryptocurrency
+ * - Interactive tooltip with values for all cryptos
+ *
+ * @param props - Component props
+ * @param props.cryptos - Array of cryptocurrencies to compare
+ * @returns Comparison chart component or null if no data
+ */
 export function ComparisonChart({ cryptos }: ComparisonChartProps) {
   const { resolvedTheme } = useTheme()
 
@@ -50,7 +63,7 @@ export function ComparisonChart({ cryptos }: ComparisonChartProps) {
     for (let i = 0; i < maxPoints; i++) {
       const point: Record<string, number | string> = {
         index: i,
-        day: `Día ${Math.floor((i / maxPoints) * 7) + 1}`,
+        day: `Day ${Math.floor((i / maxPoints) * 7) + 1}`,
       }
 
       cryptos.forEach((crypto) => {
@@ -77,9 +90,9 @@ export function ComparisonChart({ cryptos }: ComparisonChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Comparación de Rendimiento (7 días)</CardTitle>
+        <CardTitle>Performance Comparison (7 days)</CardTitle>
         <p className="text-sm text-muted-foreground">
-          Rendimiento normalizado (base 100)
+          Normalized performance (base 100)
         </p>
       </CardHeader>
       <CardContent>

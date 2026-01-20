@@ -41,7 +41,7 @@ export default function CryptoDetailPage({ params }: PageProps) {
             <Link href="/">
               <Button variant="outline">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Volver al inicio
+                Back to home
               </Button>
             </Link>
           </div>
@@ -59,7 +59,7 @@ export default function CryptoDetailPage({ params }: PageProps) {
         <Link href="/" className="mb-6 inline-flex">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Volver
+            Back
           </Button>
         </Link>
 
@@ -131,27 +131,27 @@ export default function CryptoDetailPage({ params }: PageProps) {
                 value={formatCurrency(details.market_data.market_cap.usd, true)}
               />
               <StatCard
-                title="Volumen 24h"
+                title="Volume 24h"
                 value={formatCurrency(details.market_data.total_volume.usd, true)}
               />
               <StatCard
-                title="Supply Circulante"
+                title="Circulating Supply"
                 value={formatNumber(details.market_data.circulating_supply, true)}
               />
               <StatCard
-                title="Supply Total"
+                title="Total Supply"
                 value={
                   details.market_data.total_supply
                     ? formatNumber(details.market_data.total_supply, true)
-                    : "Ilimitado"
+                    : "Unlimited"
                 }
               />
               <StatCard
-                title="Máximo 24h"
+                title="High 24h"
                 value={formatCurrency(details.market_data.high_24h.usd)}
               />
               <StatCard
-                title="Mínimo 24h"
+                title="Low 24h"
                 value={formatCurrency(details.market_data.low_24h.usd)}
               />
             </div>
@@ -160,7 +160,7 @@ export default function CryptoDetailPage({ params }: PageProps) {
             {details.description.en && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Acerca de {details.name}</CardTitle>
+                  <CardTitle>About {details.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p
@@ -176,7 +176,7 @@ export default function CryptoDetailPage({ params }: PageProps) {
             {/* Links */}
             <Card>
               <CardHeader>
-                <CardTitle>Enlaces</CardTitle>
+                <CardTitle>Links</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -188,7 +188,7 @@ export default function CryptoDetailPage({ params }: PageProps) {
                     >
                       <Button variant="outline" size="sm">
                         <Globe className="mr-2 h-4 w-4" />
-                        Sitio Web
+                        Website
                         <ExternalLink className="ml-2 h-3 w-3" />
                       </Button>
                     </a>

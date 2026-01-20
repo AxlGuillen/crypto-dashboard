@@ -12,6 +12,17 @@ interface FavoriteButtonProps {
   className?: string
 }
 
+/**
+ * Toggle button for adding/removing items from favorites
+ *
+ * @param props - Component props
+ * @param props.isFavorite - Whether the item is currently favorited
+ * @param props.onToggle - Callback function when button is clicked
+ * @param props.size - Button size variant (default: "default")
+ * @param props.showLabel - If true, shows text label next to icon
+ * @param props.className - Additional CSS classes
+ * @returns Favorite toggle button component
+ */
 export function FavoriteButton({
   isFavorite,
   onToggle,
@@ -39,7 +50,7 @@ export function FavoriteButton({
         size === "sm" && "h-8 w-8",
         className
       )}
-      aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+      aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
     >
       <Star
         className={cn(
@@ -52,7 +63,7 @@ export function FavoriteButton({
       />
       {showLabel && (
         <span className="ml-2">
-          {isFavorite ? "En favoritos" : "Agregar a favoritos"}
+          {isFavorite ? "In favorites" : "Add to favorites"}
         </span>
       )}
     </Button>

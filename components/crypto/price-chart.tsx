@@ -26,9 +26,23 @@ const timeRanges = [
   { label: "24h", days: 1 },
   { label: "7d", days: 7 },
   { label: "30d", days: 30 },
-  { label: "1a", days: 365 },
+  { label: "1y", days: 365 },
 ]
 
+/**
+ * Interactive price chart component for cryptocurrency
+ *
+ * Features:
+ * - Area chart with gradient fill
+ * - Selectable time ranges (24h, 7d, 30d, 1y)
+ * - Color-coded based on price trend (green/red)
+ * - Custom tooltip with formatted price
+ *
+ * @param props - Component props
+ * @param props.cryptoId - ID of the cryptocurrency to display
+ * @param props.cryptoName - Name of the cryptocurrency for title
+ * @returns Price chart component or error message if loading fails
+ */
 export function PriceChart({ cryptoId, cryptoName }: PriceChartProps) {
   const [selectedRange, setSelectedRange] = useState(7)
   const { resolvedTheme } = useTheme()
@@ -48,11 +62,11 @@ export function PriceChart({ cryptoId, cryptoName }: PriceChartProps) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Gráfico de Precio</CardTitle>
+          <CardTitle>Price Chart</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex h-[300px] items-center justify-center text-muted-foreground">
-            Error al cargar el gráfico
+            Error loading chart
           </div>
         </CardContent>
       </Card>
@@ -62,7 +76,7 @@ export function PriceChart({ cryptoId, cryptoName }: PriceChartProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle>Precio de {cryptoName}</CardTitle>
+        <CardTitle>{cryptoName} Price</CardTitle>
         <div className="flex gap-1">
           {timeRanges.map((range) => (
             <Button
@@ -158,6 +172,16 @@ interface SparklineProps {
   height?: number
 }
 
+/**
+ * Compact sparkline chart for inline price visualization
+ *
+ * @param props - Component props
+ * @param props.data - Array of price values
+ * @param props.className - Additional CSS classes
+ * @param props.width - Custom width in pixels
+ * @param props.height - Custom height in pixels
+ * @returns Sparkline chart component or null if no data
+ */
 export function Sparkline({ data, className, width, height }: SparklineProps) {
   if (!data || data.length === 0) return null
 

@@ -54,7 +54,7 @@ export default function Home() {
               onClick={handleRefresh}
               className="ml-auto"
             >
-              Reintentar
+              Retry
             </Button>
           </div>
         )}
@@ -62,11 +62,11 @@ export default function Home() {
         {/* Stats Section */}
         <section className="mb-8">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Resumen del Mercado</h2>
+            <h2 className="text-2xl font-bold">Market Overview</h2>
             <div className="flex items-center gap-3">
               {lastUpdated && (
                 <span className="text-xs text-muted-foreground">
-                  Actualizado: {lastUpdated.toLocaleTimeString("es-ES")}
+                  Updated: {lastUpdated.toLocaleTimeString("en-US")}
                 </span>
               )}
               <Button
@@ -78,7 +78,7 @@ export default function Home() {
                 <RefreshCw
                   className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`}
                 />
-                Actualizar
+                Refresh
               </Button>
             </div>
           </div>
@@ -94,23 +94,23 @@ export default function Home() {
             ) : globalData ? (
               <>
                 <StatCard
-                  title="Cap. Total del Mercado"
+                  title="Total Market Cap"
                   value={formatCurrency(globalData.total_market_cap.usd, true)}
                   change={globalData.market_cap_change_percentage_24h_usd}
                   icon={DollarSign}
                 />
                 <StatCard
-                  title="Volumen 24h"
+                  title="Volume 24h"
                   value={formatCurrency(globalData.total_volume.usd, true)}
                   icon={BarChart3}
                 />
                 <StatCard
-                  title="Dominancia BTC"
+                  title="BTC Dominance"
                   value={`${globalData.market_cap_percentage.btc.toFixed(1)}%`}
                   icon={TrendingUp}
                 />
                 <StatCard
-                  title="Criptos Activas"
+                  title="Active Cryptos"
                   value={formatNumber(globalData.active_cryptocurrencies)}
                   icon={Activity}
                 />
@@ -118,13 +118,13 @@ export default function Home() {
             ) : (
               <>
                 <StatCard
-                  title="Cap. Total del Mercado"
+                  title="Total Market Cap"
                   value="--"
                   icon={DollarSign}
                 />
                 <StatCard title="Volumen 24h" value="--" icon={BarChart3} />
-                <StatCard title="Dominancia BTC" value="--" icon={TrendingUp} />
-                <StatCard title="Criptos Activas" value="--" icon={Activity} />
+                <StatCard title="BTC Dominance" value="--" icon={TrendingUp} />
+                <StatCard title="Active Cryptos" value="--" icon={Activity} />
               </>
             )}
           </div>
@@ -133,9 +133,9 @@ export default function Home() {
         {/* Crypto Table Section */}
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Top 50 Criptomonedas</h2>
+            <h2 className="text-2xl font-bold">Top 50 Cryptocurrencies</h2>
             <span className="text-sm text-muted-foreground">
-              Click en actualizar para refrescar
+              Click refresh to update data
             </span>
           </div>
           <CryptoTable cryptos={cryptos} loading={cryptosLoading} />

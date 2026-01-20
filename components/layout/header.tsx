@@ -8,10 +8,21 @@ import { Button } from "@/components/ui/button"
 
 const navLinks = [
   { href: "/", label: "Dashboard" },
-  { href: "/mercado", label: "Mercado" },
-  { href: "/watchlist", label: "Favoritos" },
+  { href: "/mercado", label: "Market" },
+  { href: "/watchlist", label: "Favorites" },
 ]
 
+/**
+ * Main application header with navigation
+ *
+ * Features:
+ * - Logo and brand name
+ * - Desktop navigation links
+ * - Theme toggle button
+ * - Responsive mobile menu
+ *
+ * @returns Header component
+ */
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 

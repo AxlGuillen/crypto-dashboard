@@ -26,6 +26,21 @@ interface MarketHeroProps {
   loading: boolean
 }
 
+/**
+ * Hero section displaying global cryptocurrency market statistics
+ *
+ * Features:
+ * - Total market cap with 24h change
+ * - 24h trading volume
+ * - Active cryptocurrencies count
+ * - BTC and ETH dominance with progress bars
+ * - Market distribution pie chart
+ *
+ * @param props - Component props
+ * @param props.globalData - Global market data from API
+ * @param props.loading - If true, shows skeleton placeholder
+ * @returns Market hero component or skeleton if loading
+ */
 export function MarketHero({ globalData, loading }: MarketHeroProps) {
   if (loading) {
     return <MarketHeroSkeleton />
@@ -58,7 +73,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Cap. Total del Mercado
+                  Total Market Cap
                 </CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
@@ -73,7 +88,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
                   )}
                 >
                   {isPositive ? "+" : ""}
-                  {marketChange.toFixed(2)}% en 24h
+                  {marketChange.toFixed(2)}% in 24h
                 </p>
               </CardContent>
             </Card>
@@ -82,7 +97,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Volumen 24h
+                  Volume 24h
                 </CardTitle>
                 <BarChart3 className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
@@ -91,7 +106,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
                   {formatCurrency(globalData.total_volume.usd, true)}
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Volumen global de trading
+                  Global trading volume
                 </p>
               </CardContent>
             </Card>
@@ -100,7 +115,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Criptos Activas
+                  Active Cryptos
                 </CardTitle>
                 <Coins className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
@@ -109,7 +124,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
                   {formatNumber(globalData.active_cryptocurrencies)}
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Criptomonedas en el mercado
+                  Cryptocurrencies in the market
                 </p>
               </CardContent>
             </Card>
@@ -124,7 +139,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
                     <span className="text-lg font-bold text-white">₿</span>
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-muted-foreground">Dominancia BTC</p>
+                    <p className="text-sm text-muted-foreground">BTC Dominance</p>
                     <p className="text-2xl font-bold">{btcDominance.toFixed(2)}%</p>
                   </div>
                 </div>
@@ -144,7 +159,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
                     <span className="text-lg font-bold text-white">Ξ</span>
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-muted-foreground">Dominancia ETH</p>
+                    <p className="text-sm text-muted-foreground">ETH Dominance</p>
                     <p className="text-2xl font-bold">{ethDominance.toFixed(2)}%</p>
                   </div>
                 </div>
@@ -163,7 +178,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
         <Card className="flex flex-col overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Distribución del Mercado
+              Market Distribution
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-1 flex-col justify-center p-4">
@@ -230,6 +245,11 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
   )
 }
 
+/**
+ * Skeleton placeholder for MarketHero while loading
+ *
+ * @returns Skeleton hero component
+ */
 function MarketHeroSkeleton() {
   return (
     <div className="mb-8">

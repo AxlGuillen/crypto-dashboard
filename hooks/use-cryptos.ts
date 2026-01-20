@@ -7,7 +7,7 @@ import type { Cryptocurrency } from "@/types/crypto"
 interface UseCryptosOptions {
   page?: number
   perPage?: number
-  refreshInterval?: number // miliseconds
+  refreshInterval?: number // milliseconds
 }
 
 interface UseCryptosReturn {
@@ -18,6 +18,21 @@ interface UseCryptosReturn {
   lastUpdated: Date | null
 }
 
+/**
+ * Custom hook for fetching a list of cryptocurrencies
+ *
+ * Features:
+ * - Fetches cryptocurrency list sorted by market cap
+ * - Supports pagination
+ * - Auto-refresh with configurable interval
+ * - Tracks last update time
+ *
+ * @param options - Configuration options
+ * @param options.page - Page number for pagination (default: 1)
+ * @param options.perPage - Number of results per page (default: 50)
+ * @param options.refreshInterval - Auto-refresh interval in ms (default: 60000, 0 to disable)
+ * @returns Object with cryptos array, loading state, error, refetch function, and lastUpdated timestamp
+ */
 export function useCryptos(options: UseCryptosOptions = {}): UseCryptosReturn {
   const { page = 1, perPage = 50, refreshInterval = 60000 } = options
 
@@ -26,6 +41,10 @@ export function useCryptos(options: UseCryptosOptions = {}): UseCryptosReturn {
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
+  /**
+   * Fetches cryptocurrency list from API
+   * @param forceRefresh - If true, bypasses cache
+   */
   const fetchCryptos = useCallback(async (forceRefresh = false) => {
     try {
       setError(null)

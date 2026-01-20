@@ -1,16 +1,16 @@
 /**
- * Cache Manager - Sistema de cache robusto con localStorage
+ * Cache Manager - Robust caching system with localStorage persistence
  *
- * Características:
- * - TTL configurable (default: 10 minutos)
- * - Persistencia en localStorage entre sesiones
- * - Fallback a cache expirado si API falla
- * - Debug logging opcional
+ * Features:
+ * - Configurable TTL (default: 10 minutes)
+ * - Persistence across browser sessions via localStorage
+ * - Fallback to expired cache when API fails
+ * - Optional debug logging
  */
 
 const CACHE_PREFIX = "crypto_cache_"
-const DEFAULT_TTL = 10 * 60 * 1000
-const DEBUG = false
+const DEFAULT_TTL = 10 * 60 * 1000 // 10 minutes in milliseconds
+const DEBUG = false // Set to true to enable debug logging
 
 interface CacheEntry<T> {
   key: string
@@ -20,7 +20,10 @@ interface CacheEntry<T> {
 }
 
 /**
- * Log de debug (solo si DEBUG = true)
+ * Logs debug messages to console (only when DEBUG is true)
+ *
+ * @param message - The message to log
+ * @param data - Optional data to include in the log
  */
 function debugLog(message: string, data?: unknown): void {
   if (DEBUG) {
@@ -29,23 +32,29 @@ function debugLog(message: string, data?: unknown): void {
 }
 
 /**
- * Verifica si estamos en el cliente (navegador)
+ * Checks if code is running in a browser environment
+ *
+ * @returns True if running in browser, false otherwise
  */
 function isClient(): boolean {
   return typeof window !== "undefined"
 }
 
 /**
- * Obtiene la clave completa del cache
+ * Generates the full cache key with prefix
+ *
+ * @param key - The base cache key
+ * @returns The prefixed cache key
  */
 function getCacheKey(key: string): string {
   return `${CACHE_PREFIX}${key}`
 }
 
 /**
- * Obtiene datos del cache si existen y son válidos
- * @param key - Identificador único del cache
- * @returns Datos del cache o null si no existe/expirado
+ * Retrieves data from cache if it exists and is valid (not expired)
+ *
+ * @param key - Unique cache identifier
+ * @returns Cached data or null if not found/expired
  */
 export function getCachedData<T>(key: string): T | null {
   if (!isClient()) return null
@@ -55,7 +64,7 @@ export function getCachedData<T>(key: string): T | null {
     const cached = localStorage.getItem(cacheKey)
 
     if (!cached) {
-      debugLog(`MISS - No existe: ${key}`)
+      debugLog(`MISS - Does not exist: ${key}`)
       return null
     }
 
@@ -64,23 +73,24 @@ export function getCachedData<T>(key: string): T | null {
 
     if (now < entry.expiresAt) {
       const remainingTime = Math.round((entry.expiresAt - now) / 1000)
-      debugLog(`HIT - ${key} (expira en ${remainingTime}s)`)
+      debugLog(`HIT - ${key} (expires in ${remainingTime}s)`)
       return entry.data
     }
 
     debugLog(`EXPIRED - ${key}`)
     return null
   } catch (error) {
-    debugLog(`ERROR leyendo cache: ${key}`, error)
+    debugLog(`ERROR reading cache: ${key}`, error)
     return null
   }
 }
 
 /**
- * Guarda datos en el cache
- * @param key - Identificador único del cache
- * @param data - Datos a guardar
- * @param ttl - Time To Live en milisegundos (default: 10 min)
+ * Saves data to cache with specified TTL
+ *
+ * @param key - Unique cache identifier
+ * @param data - Data to cache
+ * @param ttl - Time To Live in milliseconds (default: 10 minutes)
  */
 export function setCachedData<T>(key: string, data: T, ttl: number = DEFAULT_TTL): void {
   if (!isClient()) return
@@ -99,7 +109,8 @@ export function setCachedData<T>(key: string, data: T, ttl: number = DEFAULT_TTL
     localStorage.setItem(cacheKey, JSON.stringify(entry))
     debugLog(`SET - ${key} (TTL: ${ttl / 1000}s)`)
   } catch (error) {
-    debugLog(`ERROR guardando cache: ${key}`, error)
+    debugLog(`ERROR saving cache: ${key}`, error)
+    // If localStorage is full, clear expired entries
     if (error instanceof Error && error.name === "QuotaExceededError") {
       clearExpiredCache()
     }
@@ -107,9 +118,10 @@ export function setCachedData<T>(key: string, data: T, ttl: number = DEFAULT_TTL
 }
 
 /**
- * Obtiene datos expirados del cache (para fallback)
- * @param key - Identificador único del cache
- * @returns Datos del cache aunque estén expirados, o null si no existen
+ * Retrieves expired cache data for fallback purposes
+ *
+ * @param key - Unique cache identifier
+ * @returns Cached data even if expired, or null if not found
  */
 export function getExpiredCacheData<T>(key: string): T | null {
   if (!isClient()) return null
@@ -121,7 +133,7 @@ export function getExpiredCacheData<T>(key: string): T | null {
     if (!cached) return null
 
     const entry: CacheEntry<T> = JSON.parse(cached)
-    debugLog(`FALLBACK - Usando cache expirado: ${key}`)
+    debugLog(`FALLBACK - Using expired cache: ${key}`)
     return entry.data
   } catch (error) {
     return null
@@ -129,9 +141,10 @@ export function getExpiredCacheData<T>(key: string): T | null {
 }
 
 /**
- * Verifica si el cache para una clave es válido
- * @param key - Identificador único del cache
- * @returns true si el cache existe y no está expirado
+ * Checks if cache for a given key is valid (exists and not expired)
+ *
+ * @param key - Unique cache identifier
+ * @returns True if cache exists and is not expired
  */
 export function isCacheValid(key: string): boolean {
   if (!isClient()) return false
@@ -150,8 +163,9 @@ export function isCacheValid(key: string): boolean {
 }
 
 /**
- * Invalida (elimina) una entrada específica del cache
- * @param key - Identificador único del cache
+ * Invalidates (removes) a specific cache entry
+ *
+ * @param key - Unique cache identifier to invalidate
  */
 export function invalidateCache(key: string): void {
   if (!isClient()) return
@@ -161,12 +175,12 @@ export function invalidateCache(key: string): void {
     localStorage.removeItem(cacheKey)
     debugLog(`INVALIDATE - ${key}`)
   } catch (error) {
-    debugLog(`ERROR invalidando cache: ${key}`, error)
+    debugLog(`ERROR invalidating cache: ${key}`, error)
   }
 }
 
 /**
- * Limpia todo el cache de la aplicación
+ * Clears all cache entries for this application
  */
 export function clearAllCache(): void {
   if (!isClient()) return
@@ -182,14 +196,14 @@ export function clearAllCache(): void {
     }
 
     keysToRemove.forEach((key) => localStorage.removeItem(key))
-    debugLog(`CLEAR ALL - ${keysToRemove.length} entradas eliminadas`)
+    debugLog(`CLEAR ALL - ${keysToRemove.length} entries removed`)
   } catch (error) {
-    debugLog("ERROR limpiando cache", error)
+    debugLog("ERROR clearing cache", error)
   }
 }
 
 /**
- * Limpia solo las entradas expiradas del cache
+ * Clears only expired cache entries
  */
 export function clearExpiredCache(): void {
   if (!isClient()) return
@@ -212,15 +226,16 @@ export function clearExpiredCache(): void {
     }
 
     keysToRemove.forEach((key) => localStorage.removeItem(key))
-    debugLog(`CLEAR EXPIRED - ${keysToRemove.length} entradas eliminadas`)
+    debugLog(`CLEAR EXPIRED - ${keysToRemove.length} entries removed`)
   } catch (error) {
-    debugLog("ERROR limpiando cache expirado", error)
+    debugLog("ERROR clearing expired cache", error)
   }
 }
 
 /**
- * Obtiene estadísticas del cache
- * @returns Objeto con estadísticas del cache
+ * Returns cache statistics
+ *
+ * @returns Object containing total, valid, and expired entry counts plus total size
  */
 export function getCacheStats(): {
   totalEntries: number
@@ -245,7 +260,7 @@ export function getCacheStats(): {
         totalEntries++
         const cached = localStorage.getItem(key)
         if (cached) {
-          totalBytes += cached.length * 2
+          totalBytes += cached.length * 2 // UTF-16 encoding
           const entry: CacheEntry<unknown> = JSON.parse(cached)
           if (now < entry.expiresAt) {
             validEntries++

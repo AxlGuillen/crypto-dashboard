@@ -17,9 +17,15 @@ interface UseCryptoChartReturn {
   refetch: (forceRefresh?: boolean) => Promise<void>
 }
 
+/**
+ * Formats raw market chart data into chart-friendly data points
+ *
+ * @param data - Raw market chart data from API
+ * @returns Array of formatted chart data points
+ */
 function formatChartData(data: CryptoMarketChart): ChartDataPoint[] {
   return data.prices.map(([timestamp, price], index) => ({
-    date: new Date(timestamp).toLocaleDateString("es-ES", {
+    date: new Date(timestamp).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
     }),
@@ -30,6 +36,20 @@ function formatChartData(data: CryptoMarketChart): ChartDataPoint[] {
   }))
 }
 
+/**
+ * Custom hook for fetching cryptocurrency price chart data
+ *
+ * Features:
+ * - Fetches historical price, volume, and market cap data
+ * - Configurable time range (1 day to 1 year+)
+ * - Provides both raw API data and formatted chart data
+ *
+ * @param id - The cryptocurrency ID, or null to skip fetch
+ * @param options - Configuration options
+ * @param options.days - Number of days of history (default: 7)
+ * @param options.currency - Target currency (default: "usd")
+ * @returns Object with formatted chartData, rawData, loading state, error, and refetch function
+ */
 export function useCryptoChart(
   id: string | null,
   options: UseCryptoChartOptions = {}
@@ -41,6 +61,10 @@ export function useCryptoChart(
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  /**
+   * Fetches chart data from API
+   * @param forceRefresh - If true, bypasses cache
+   */
   const fetchChart = useCallback(async (forceRefresh = false) => {
     if (!id) return
 
@@ -57,6 +81,7 @@ export function useCryptoChart(
     }
   }, [id, days, currency])
 
+  // Fetch when ID or options change
   useEffect(() => {
     if (id) {
       fetchChart(false)

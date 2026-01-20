@@ -15,6 +15,19 @@ interface UseGlobalDataReturn {
   refetch: (forceRefresh?: boolean) => Promise<void>
 }
 
+/**
+ * Custom hook for fetching global cryptocurrency market data
+ *
+ * Provides global market statistics including:
+ * - Total market cap
+ * - Total trading volume
+ * - BTC and ETH dominance
+ * - Number of active cryptocurrencies
+ *
+ * @param options - Configuration options
+ * @param options.refreshInterval - Auto-refresh interval in ms (default: 60000, 0 to disable)
+ * @returns Object with global data, loading state, error, and refetch function
+ */
 export function useGlobalData(
   options: UseGlobalDataOptions = {}
 ): UseGlobalDataReturn {
@@ -24,6 +37,10 @@ export function useGlobalData(
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  /**
+   * Fetches global market data from API
+   * @param forceRefresh - If true, bypasses cache
+   */
   const fetchData = useCallback(async (forceRefresh = false) => {
     try {
       setError(null)
@@ -39,6 +56,7 @@ export function useGlobalData(
     }
   }, [])
 
+  // Initial fetch and auto-refresh setup
   useEffect(() => {
     fetchData(false)
 
