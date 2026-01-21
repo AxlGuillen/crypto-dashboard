@@ -222,7 +222,7 @@ export function MarketHero({ globalData, loading }: MarketHeroProps) {
 
             {/* Modern Legend */}
             <div className="mt-4 space-y-2">
-              {pieData.map((item, index) => (
+              {pieData.map((item, index) => ( 
                 <div
                   key={index}
                   className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2 transition-colors hover:bg-muted"
