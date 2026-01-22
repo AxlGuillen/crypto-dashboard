@@ -4,10 +4,6 @@
     A modern, real-time cryptocurrency tracking application built with Next.js
     <br />
     <a href="https://crypto-dashboard.vercel.app"><strong>View Demo</strong></a>
-    ·
-    <a href="https://github.com/AxlGuillen/crypto-dashboard/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/AxlGuillen/crypto-dashboard/issues">Request Feature</a>
   </p>
 </p>
 
@@ -16,7 +12,6 @@
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React" />
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
   <img src="https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=flat-square&logo=tailwindcss" alt="TailwindCSS" />
-  <img src="https://img.shields.io/github/license/AxlGuillen/crypto-dashboard?style=flat-square" alt="License" />
 </p>
 
 ## Overview
