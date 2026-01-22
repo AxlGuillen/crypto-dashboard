@@ -1,0 +1,102 @@
+# Crypto Dashboard
+
+> A modern, real-time cryptocurrency monitoring application built with Next.js. Track top cryptocurrencies, analyze market trends, and manage your watchlist with interactive charts and comprehensive market data.
+
+## Overview
+
+Crypto Dashboard is a web application that provides users with real-time cryptocurrency data, market analysis, and portfolio tracking features. The application fetches data from the CoinGecko API and presents it through an intuitive, responsive interface with support for both light and dark themes.
+
+## Main Features
+
+- **Real-time Cryptocurrency Data**: Top 50 cryptocurrencies sorted by market cap with live price updates
+- **Market Overview**: Total market cap, trading volume, BTC dominance, and active cryptocurrencies count
+- **Detailed Crypto Pages**: Individual pages for each cryptocurrency with price charts, market data, and external links
+- **Interactive Price Charts**: Area charts with multiple time ranges (24h, 7d, 30d, 1y)
+- **Watchlist/Favorites**: Save and compare favorite cryptocurrencies with comparison charts
+- **Market Analysis**: Trending coins, top gainers/losers, and global market metrics
+- **Dark Mode Support**: Full light/dark theme toggle with system preference detection
+
+## Pages
+
+### Dashboard (/)
+The main dashboard displays the top 50 cryptocurrencies in a sortable table format. Users can:
+- View current prices, market cap, 24h volume, and price changes
+- Sort by any column (name, price, market cap, volume, 24h change)
+- Add/remove cryptocurrencies from favorites
+- Navigate to detailed crypto pages
+- See global market statistics
+
+### Crypto Detail (/crypto/[id])
+Individual cryptocurrency pages showing:
+- Large price display with price change badges (24h, 7d, 30d)
+- Interactive price chart with selectable time ranges
+- Market statistics (market cap, volume, circulating supply, 24h high/low)
+- Cryptocurrency description
+- External links (official website, blockchain explorer, GitHub)
+
+### Market Analysis (/mercado)
+Comprehensive market overview featuring:
+- Global market metrics (total market cap, volume, BTC/ETH dominance)
+- Top gainers and losers sections
+- Trending cryptocurrencies
+- Market sentiment indicators
+
+### Watchlist (/watchlist)
+Personal cryptocurrency watchlist with:
+- Grid view of favorite cryptocurrencies
+- Watchlist statistics (count, total market cap, average 24h change)
+- Comparison chart for all watched cryptocurrencies
+- Quick actions to remove from watchlist
+
+## Technology Stack
+
+- **Framework**: Next.js 16.1.3 with App Router
+- **Language**: TypeScript 5
+- **UI Library**: React 19.2.3
+- **Styling**: TailwindCSS 4
+- **Charts**: Recharts 3.6.0
+- **UI Components**: Radix UI (dropdown menu, slot)
+- **Icons**: Lucide React
+- **Theming**: next-themes
+
+## Data Source
+
+All cryptocurrency data is fetched from the CoinGecko API (free tier):
+- `/coins/markets` - Top cryptocurrencies by market cap
+- `/coins/{id}` - Detailed cryptocurrency information
+- `/coins/{id}/market_chart` - Historical price data
+- `/global` - Global market statistics
+- `/search/trending` - Trending cryptocurrencies
+
+Data is cached locally for 10 minutes to optimize performance and reduce API calls.
+
+## Navigation
+
+- **Header**: Fixed navigation bar with links to Dashboard, Market, and Watchlist
+- **Theme Toggle**: Switch between light, dark, and system theme
+- **Mobile Menu**: Responsive hamburger menu for mobile devices
+- **Breadcrumbs**: On detail pages for easy navigation back
+
+## User Interactions
+
+- Click on any cryptocurrency row to view detailed information
+- Click the star icon to add/remove from watchlist
+- Click column headers to sort the table
+- Select time ranges on charts (24h, 7d, 30d, 1y)
+- Use the refresh button to fetch latest data
+
+## Key Information for AI Assistants
+
+This is a cryptocurrency tracking dashboard. When users ask about:
+- **Prices**: The dashboard shows real-time prices from CoinGecko
+- **Market Data**: Global statistics are available on the main dashboard and market page
+- **Specific Coins**: Users can search or navigate to /crypto/[coin-id] for details
+- **Favorites**: The watchlist feature stores favorites in browser localStorage
+- **Charts**: Interactive charts support multiple time ranges for price history
+
+The application is read-only (no trading functionality) and designed for market monitoring and research purposes.
+
+## Contact & Links
+
+- Repository: GitHub project at github.com/AxlGuillen/crypto-dashboard
+- Data Provider: CoinGecko API (coingecko.com)
