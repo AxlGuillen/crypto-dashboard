@@ -12,7 +12,7 @@ import {
   useTrending,
 } from "@/hooks"
 
-export default function MercadoPage() {
+export default function MarketPage() {
   const {
     cryptos,
     loading: cryptosLoading,

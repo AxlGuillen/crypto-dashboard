@@ -34,7 +34,7 @@ Individual cryptocurrency pages showing:
 - Cryptocurrency description
 - External links (official website, blockchain explorer, GitHub)
 
-### Market Analysis (/mercado)
+### Market Analysis (/market)
 Comprehensive market overview featuring:
 - Global market metrics (total market cap, volume, BTC/ETH dominance)
 - Top gainers and losers sections
